@@ -140,10 +140,12 @@ class Wallet(object):
 
     def get_balance(self, address):
         """
-        Read balance from the Ethereum network in ether
-        :return: number of ether on users account
+        从以太坊网络中读取账户余额
+        :return: 用户账户的以太币数量
         """
         self.w3 = Infura().get_web3()
+        # eth.get_balanc 获取余额
+        # web3.fromWei 将 wei 值转换为以太币的数量
         eth_balance = self.w3.fromWei(self.w3.eth.getBalance(address), 'ether')
         return eth_balance
 

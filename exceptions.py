@@ -1,47 +1,24 @@
 class InsufficientFundsException(Exception):
-    """
-    Raised when user want to send funds and have insufficient balance on address
-    """
+    """当用户想要发送ETH但地址余额不足时抛出"""
     pass
-
 
 class InsufficientERC20FundsException(Exception):
-    """
-    Raised when user want to send ERC20 contract tokens and have insufficient balance
-    of these tokens on wallet's address
-    """
+    """当用户想要发送ERC-20但地址余额不足时抛出"""
     pass
-
 
 class ERC20NotExistsException(Exception):
-    """
-    Raised when user want manipulate with token which doesn't exist in wallet.
-    """
+    """当用户想要操作钱包中不存在的 Token时抛出"""
     pass
-
 
 class InvalidTransactionNonceException(Exception):
-    """
-    Raised when duplicated nonce occur or any other problem with nonce
-    """
+    """当出现重复的 nonce 或其他问题时抛出"""
     pass
-
 
 class InvalidValueException(Exception):
-    """
-    Raised when some of expected values is not correct.
-    """
     pass
-
 
 class InvalidPasswordException(Exception):
-    """
-    Raised when invalid password was entered.
-    """
     pass
 
-
 class InfuraErrorException(Exception):
-    """
-    Raised when wallet cannot connect to infura node.
-    """
+    """当钱包无法正确连接到 infura 节点时触发 """

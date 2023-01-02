@@ -1,19 +1,16 @@
 import click
-from utils_cli import (
-    get_api,
-)
-from configuration import (
-    Configuration,
-)
-
+import sys
+sys.path.append("..") 
+from configuration import Configuration
+from Wallet import Wallet
 
 @click.command()
 def get_wallet_info():
     """Get wallet account from encrypted keystore."""
     configuration = Configuration().load_configuration()
-    api = get_api()
 
-    address, pub_key = api.get_wallet(configuration)
+    address = Wallet(configuration).get_address()
+    pub_key = Wallet(configuration).get_public_key()
 
     click.echo('Account address: %s' % str(address))
     click.echo('Account pub key: %s' % str(pub_key))

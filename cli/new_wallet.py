@@ -3,7 +3,6 @@ import getpass
 import sys
 sys.path.append("..") 
 from Wallet import ( Wallet )
-
 from configuration import (Configuration,)
 
 @click.command()

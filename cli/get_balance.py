@@ -1,31 +1,35 @@
 import click
 import sys 
 sys.path.append("..") 
-from utils_cli import ( get_api, )
-from configuration import ( Configuration, )
-from web3.exceptions import (
-    InvalidAddress,
-)
-from exceptions import (
-    InfuraErrorException,
-    ERC20NotExistsException,
-)
+from Wallet import Wallet
+from contract import Contract
+from configuration import Configuration
+from web3.exceptions import *
+from exceptions import *
 
 
 @click.command()
 @click.option('-t', '--token', default=None,
               help='Token symbol.')
 def get_balance(token):
-    """Get address balance."""
+    """获取账户余额."""
     configuration = Configuration().load_configuration()
-    api = get_api()
+    wallet_address = Wallet(configuration).get_address()
     try:
         if token is None:
-            eth_balance, address = api.get_balance(configuration)
-            click.echo('Balance on address %s is: %sETH' % (address, eth_balance))
-        else:
-            token_balance, address = api.get_balance(configuration, token)
-            click.echo('Balance on address %s is: %s%s' % (address, token_balance, token))
+            eth_balance = Wallet(configuration).get_balance(wallet_address)
+            click.echo('Balance on address %s is: %sETH' % (wallet_address, eth_balance))
+
+        if token is not None:
+            try:  # check if token is added to the wallet
+                contract_address = configuration.contracts[token]
+            except KeyError:
+                raise ERC20NotExistsException()
+            contract = Contract(configuration, contract_address)
+            token_balance = contract.get_balance(wallet_address)
+
+            # token_balance, address = get_balance(configuration, token)
+            click.echo('Balance on address %s is: %s%s' % (wallet_address, token_balance, token))
     except InvalidAddress:
         click.echo('Invalid address or wallet does not exist!')
     except InfuraErrorException:

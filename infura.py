@@ -1,12 +1,10 @@
 from web3 import ( Web3, )
-from exceptions import ( InfuraErrorException )
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
-PRIVATEKEY = os.getenv("PRIVATEKEY")
-infura_url = "https://goerli.infura.io/v3/"+PRIVATEKEY
-# print(infura_url)
+API_KEY = os.getenv("API_KEY")
+infura_url = "https://goerli.infura.io/v3/"+API_KEY
 
 class Infura:
     def __init__(self):

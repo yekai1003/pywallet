@@ -31,10 +31,6 @@ contractAddress = '0x0845d45E1D8b2e4c7583623Bed34b6D59Da0fBA3'
 def handle_event(event):
     print('event', event)
     print('dir(event)', dir(event))
-    # print('toText',Web3.toText(event))
-    # print('toHex',Web3.toHex(event))
-    # print('toWei',Web3.toWei(event))
-    # print('toInt',Web3.toInt(event))
 
 
 # asynchronous defined function to loop
