@@ -75,12 +75,12 @@ def send_transaction(to, value, token):
             # 把 Token 数量改造成合约熟悉的格式（如 18 位）
             token_amount = int(float(value) * (10 ** erc20_decimals))
             # 获取钱包余额，检查是否足够转账
-            erc20_balance = contract.get_balance(wallet.get_address())
-            if float(value) > erc20_balance:
-                raise InsufficientERC20FundsException()
+            #erc20_balance = contract.get_balance(wallet.get_address())
+            #if float(value) > erc20_balance:
+            #    raise InsufficientERC20FundsException()
 
             print('token_amount will be sent ', token_amount )
-            print(f"Receiver balance: {contract_w3.functions.balanceOf(to_address).call()} {token} Tokens.")
+            #print(f"Receiver balance: {contract_w3.functions.balanceOf(to_address).call()} {token} Tokens.")
             # 构建 transaction 交易对象
             # data：调用合约的 transfer 函数，参数分别是 address 和 amt
             raw_txn = {
@@ -96,8 +96,9 @@ def send_transaction(to, value, token):
             signed_txn = web3.eth.account.signTransaction(raw_txn, wallet.get_account().privateKey)
             # 发送交易
             tx_hash = web3.eth.sendRawTransaction(signed_txn.rawTransaction)
-            print("tx hash: ",tx_hash)
+            print("tx hash: ",tx_hash.hex())
             # 等待交易执行成功 ...
+            '''
             while True:
                 tx_receipt = web3.eth.getTransactionReceipt(tx_hash)
                 if tx_receipt is None:
@@ -105,9 +106,9 @@ def send_transaction(to, value, token):
                     time.sleep(0.2)
                 else:
                     print("\nTransaction mined!")
-                    print(f"Receiver balance: {contract_w3.functions.balanceOf(to_address).call()} {token} Tokens.")
+                    #print(f"Receiver balance: {contract_w3.functions.balanceOf(to_address).call()} {token} Tokens.")
                     break
-
+            '''
     except InsufficientFundsException:
         click.echo('Insufficient ETH funds! Check balance on your address.')
     except InsufficientERC20FundsException:
